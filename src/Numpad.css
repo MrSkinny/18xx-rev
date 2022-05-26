@@ -1,0 +1,52 @@
+.Numpad {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: black;
+  z-index: 200;
+  opacity: .25;
+  width: 100%;
+  height: 100vh;
+}
+
+.inner-numpad {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 80%;
+  margin: 50px 10%;
+  padding: 5%;
+  z-index: 200;
+  background-color: white;
+  opacity: 1;
+}
+
+.numpad-button-container {
+  width: 20%;
+  margin: 10px 0;
+}
+
+.numpad-button-container-2 {
+  width: 60%;
+  margin: 10px 0;
+}
+
+.numpad-btn {
+  width: 100%;
+}
+
+.btn-close-numpad {
+  position: fixed;
+  right: 5px;
+  top: 5px;
+  z-index: 300;
+}
+
+.numpad-display p {
+  font-size: 1.8em;
+  font-weight: 800;
+}
+
+.btn-ok-numpad {
+  width: 85%;
+}
