@@ -1,3 +1,4 @@
+import "./App.css";
 import { useState, useCallback } from "react";
 import Calculator from "./Calculator";
 import Numpad from "./Numpad";

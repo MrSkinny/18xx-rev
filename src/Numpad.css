@@ -11,14 +11,21 @@
 
 .inner-numpad {
   position: fixed;
-  left: 0;
-  top: 0;
+  left: 10%;
+  top: 5%;
   width: 80%;
-  margin: 50px 10%;
   padding: 5%;
   z-index: 200;
   background-color: white;
   opacity: 1;
+}
+
+@media only screen and (min-width: 600px) {
+  .inner-numpad {
+    left: 28%;
+    width: 40%;
+    margin: 0 auto;
+  }
 }
 
 .numpad-button-container {

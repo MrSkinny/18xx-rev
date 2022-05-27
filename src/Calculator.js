@@ -111,7 +111,6 @@ export default function Calculator({ setShowNumpad, moveEps, eps, setEps }) {
         <header>
           <h3>Full Payout</h3>
         </header>
-        Dividends:
         <div className="d-flex justify-content-between flex-wrap">
           {generateOutputs({ n: shareType, shareType, eps })}
         </div>
@@ -120,7 +119,16 @@ export default function Calculator({ setShowNumpad, moveEps, eps, setEps }) {
       <section className="my-3">
         <header>
           <h3>Half Payout</h3>
-          <div>
+        </header>
+
+        <div className="d-flex justify-content-between flex-wrap">
+          {generateOutputs({
+            n: shareType,
+            shareType,
+            eps: shareholderHalf / 10
+          })}
+        </div>
+        <div className="d-flex my-2">
           Treasury Shares: 
           <button onClick={() => moveTreasuryShares(-1)} className="btn btn-sm btn-secondary mx-1">&lt;</button>
           <input
@@ -134,20 +142,10 @@ export default function Calculator({ setShowNumpad, moveEps, eps, setEps }) {
           />
           <button onClick={() => moveTreasuryShares(1)} className="btn btn-sm btn-secondary mx-1">&gt;</button>
         </div>
-        </header>
-
         <p>
           Treasury gets: ${treasuryHalf + (shareholderHalf / shareType) * treasuryShares}
         </p>
 
-        Dividends:
-        <div className="d-flex justify-content-between flex-wrap">
-          {generateOutputs({
-            n: shareType,
-            shareType,
-            eps: shareholderHalf / 10
-          })}
-        </div>
       </section>
     </div>
   );
