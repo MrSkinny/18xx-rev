@@ -1,7 +1,9 @@
 import "./App.css";
 import { useState, useCallback } from "react";
+import { Routes, Route, NavLink } from "react-router-dom";
 import Calculator from "./Calculator";
 import Numpad from "./Numpad";
+import Game from "./Game";
 
 export default function App() {
   const [ showNumpad, setShowNumpad ] = useState(false);
@@ -20,24 +22,44 @@ export default function App() {
     });
   };
 
-  return (
-    <main>
-      <Calculator 
-        eps={eps} 
-        moveEps={moveEps} 
-        setEps={setEps} 
-        setShowNumpad={setShowNumpad} 
-      />
+  const CalculatorElement = (
+    <Calculator 
+      eps={eps} 
+      moveEps={moveEps} 
+      setEps={setEps} 
+      setShowNumpad={setShowNumpad} 
+    />
+  );
 
-      { showNumpad && 
-        <Numpad 
-          eps={eps} 
-          setEps={setEps} 
-          moveEps={moveEps} 
-          typeEps={typeEps}
-          onClose={() => setShowNumpad(false)}
-        /> 
-      }
-    </main>
+  return (
+    <>
+      <nav>
+        <ul>
+          <li>
+            <NavLink to="/calculator">Calculator</NavLink>
+          </li>
+          <li>
+            <NavLink to="/game">Game</NavLink>
+          </li>
+        </ul>
+      </nav>
+      <main>
+        <Routes>
+          <Route path="/" element={CalculatorElement} />
+          <Route path="/calculator" element={CalculatorElement} />
+          <Route path="/game" element={<Game />} />
+        </Routes>
+
+        { showNumpad && 
+          <Numpad 
+            eps={eps} 
+            setEps={setEps} 
+            moveEps={moveEps} 
+            typeEps={typeEps}
+            onClose={() => setShowNumpad(false)}
+          /> 
+        }
+      </main>
+    </>
   );
 }
