@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import Revenue from "./Revenue";
 
-export default function Calculator({ setShowNumpad, moveEps, eps, setEps }) {
+export default function Calculator({ setNumpad, numpad, moveEps, eps, setEps }) {
   const [treasuryShares, setTreasuryShares] = useState(0);
   const [shareType, setShareType] = useState(10);
 
   useEffect(() => {
     function handleKeyDown(e) {
-      console.log(e.keyCode);
       switch(e.keyCode) {
         case 39:
           return e.shiftKey ? moveEps(10) : moveEps(1);
@@ -36,7 +35,7 @@ export default function Calculator({ setShowNumpad, moveEps, eps, setEps }) {
     window.addEventListener("keydown", handleKeyDown);
 
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [moveEps]);
+  }, [moveEps, setEps]);
   
   const halfPayout = (eps * 10) / 2;
   let treasuryHalf = halfPayout,
@@ -76,17 +75,13 @@ export default function Calculator({ setShowNumpad, moveEps, eps, setEps }) {
     return outputs;
   }
 
-  function handleKeyDown(e) {
-    console.log(e.keyCode);
-  }
-
   function moveTreasuryShares(n) {
     if (treasuryShares + n < 0) return;
     setTreasuryShares(ts => Number(ts) + n);
   }
 
   return (
-    <div onKeyDown={handleKeyDown} className="App container">
+    <div className="App container">
       <div className="d-flex justify-content-center">
         <button className="btn btn-sm btn-info my-2" onClick={toggleShareType}>{shareType}-share</button>
       </div>
@@ -104,7 +99,7 @@ export default function Calculator({ setShowNumpad, moveEps, eps, setEps }) {
         <button onClick={() => moveEps(1)} className="btn btn-sm btn-secondary mx-1">&gt;</button>
         <button onClick={() => moveEps(10)} className="btn btn-sm btn-secondary mx-1">&gt;&gt;</button>
         <button onClick={() => setEps(0)} className="btn btn-sm btn-danger mx-1">C</button>
-        <button onClick={() => setShowNumpad(true)} className="btn btn-sm btn-warning mx-1">N</button>
+        <button onClick={() => setNumpad({ ...numpad, show: true })} className="btn btn-sm btn-warning mx-1">N</button>
       </div>
 
       <section className="my-3">

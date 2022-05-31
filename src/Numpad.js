@@ -2,9 +2,11 @@ import { useEffect } from "react";
 import "./Numpad.css";
 
 export default function Numpad({ x, onClose, typeX, setX, zeroOnOpen = false }) {
+  console.log("typex", typeX);
+  
   useEffect(() => {
     if (zeroOnOpen) setX(0);
-  }, [setX]);
+  }, [setX, zeroOnOpen]);
 
   return (
     <>
