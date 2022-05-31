@@ -99,7 +99,7 @@ export default function Calculator({ setNumpad, numpad, moveEps, eps, setEps }) 
         <button onClick={() => moveEps(1)} className="btn btn-sm btn-secondary mx-1">&gt;</button>
         <button onClick={() => moveEps(10)} className="btn btn-sm btn-secondary mx-1">&gt;&gt;</button>
         <button onClick={() => setEps(0)} className="btn btn-sm btn-danger mx-1">C</button>
-        <button onClick={() => setNumpad({ ...numpad, show: true })} className="btn btn-sm btn-warning mx-1">N</button>
+        <button onClick={() => setNumpad({ ...numpad, type: "eps", show: true })} className="btn btn-sm btn-warning mx-1">N</button>
       </div>
 
       <section className="my-3">
