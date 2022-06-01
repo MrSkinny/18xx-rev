@@ -1,3 +1,18 @@
-.Revenue.selected {
-  background-color: red;
+.Revenue {
+  padding: 4px;
+}
+
+.Revenue .rev-head {
+  margin: 0;
+  margin-bottom: -7px;
+  text-align: center;
+  font-style: italic;
+  color: gray;
+}
+
+.Revenue .rev-total {
+  margin: 0;
+  font-size: 1.6em;
+  text-align: center;
+  font-weight: bolder;
 }

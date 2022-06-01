@@ -17,6 +17,7 @@ export default function Calculator({
 
   useEffect(() => {
     function handleKeyDown(e) {
+      console.log(e.keyCode)
       switch (e.keyCode) {
         case 39:
           return e.shiftKey ? moveEps(10) : moveEps(1);
@@ -28,6 +29,7 @@ export default function Calculator({
           return setEps(0);
 
         case 32:
+        case 190:
           return toggleShareType();
 
         default:
@@ -176,9 +178,9 @@ export default function Calculator({
             eps: shareholderHalf / 10
           })}
         </div>
-        <p>
+        <h5 className="my-3">
           Treasury half: ${treasuryHalf}
-        </p>
+        </h5>
 
       </section>
     </div>
