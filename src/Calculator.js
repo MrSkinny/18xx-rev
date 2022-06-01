@@ -1,16 +1,26 @@
+import "./Calculator.css";
 import { useState, useEffect } from "react";
 import Revenue from "./Revenue";
 
-export default function Calculator({ setNumpad, numpad, moveEps, eps, setEps }) {
-  const [treasuryShares, setTreasuryShares] = useState(0);
+export default function Calculator({
+  setNumpad,
+  numpad,
+  moveEps,
+  eps,
+  setEps,
+  player,
+  company,
+  setCompany,
+  showProjections,
+}) {
   const [shareType, setShareType] = useState(10);
 
   useEffect(() => {
     function handleKeyDown(e) {
-      switch(e.keyCode) {
+      switch (e.keyCode) {
         case 39:
           return e.shiftKey ? moveEps(10) : moveEps(1);
-        
+
         case 37:
           return e.shiftKey ? moveEps(-10) : moveEps(-1);
 
@@ -36,19 +46,35 @@ export default function Calculator({ setNumpad, numpad, moveEps, eps, setEps }) 
 
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [moveEps, setEps]);
-  
+
+  // const treasuryShares = company.shares;
+  // const setTreasuryShares = (n) => setCompany(c => ({ ...c, shares: n }));
+  const toggleShareType = () => setShareType(s => s === 5 ? 10 : 5);
+
   const halfPayout = (eps * 10) / 2;
   let treasuryHalf = halfPayout,
-    shareholderHalf = halfPayout;
+    shareholderHalf = halfPayout,
+    playerPayoutFull, playerPayoutHalf,
+    companyPayoutFull, companyPayoutHalf;
 
   if (shareType === 10 && halfPayout % 2 !== 0) {
     treasuryHalf = halfPayout - 5;
     shareholderHalf = halfPayout + 5;
   }
-  
-  function toggleShareType() {
-    setShareType(s => s === 5 ? 10 : 5);
+
+  if (shareType === 10) {
+    playerPayoutFull = eps * player.shares;
+    playerPayoutHalf = (shareholderHalf / 10) * player.shares;
+    companyPayoutFull = eps * company.shares;
+    companyPayoutHalf = (treasuryHalf / 10) * company.shares;
+  } else {
+    playerPayoutFull = ((eps * 10) / 5) * player.shares;
+    playerPayoutHalf = (shareholderHalf / 5) * player.shares;
+    companyPayoutFull = ((eps * 10) / 5) * company.shares;
+    companyPayoutHalf = (shareholderHalf / 5) * company.shares;
   }
+
+
 
   function generateOutputs({ shareType = 10, n = 10, eps = 0 }) {
     const outputs = [];
@@ -75,13 +101,8 @@ export default function Calculator({ setNumpad, numpad, moveEps, eps, setEps }) 
     return outputs;
   }
 
-  function moveTreasuryShares(n) {
-    if (treasuryShares + n < 0) return;
-    setTreasuryShares(ts => Number(ts) + n);
-  }
-
   return (
-    <div className="App container">
+    <div className="Calculator container">
       <div className="d-flex justify-content-center">
         <button className="btn btn-sm btn-info my-2" onClick={toggleShareType}>{shareType}-share</button>
       </div>
@@ -101,6 +122,38 @@ export default function Calculator({ setNumpad, numpad, moveEps, eps, setEps }) 
         <button onClick={() => setEps(0)} className="btn btn-sm btn-danger mx-1">C</button>
         <button onClick={() => setNumpad({ ...numpad, type: "eps", show: true })} className="btn btn-sm btn-warning mx-1">N</button>
       </div>
+
+      {showProjections &&
+        <section className="my-3 projected-holdings">
+          <header>
+            <h3>Projected Holdings</h3>
+          </header>
+
+          <table className="table">
+            <thead>
+              <tr>
+                <th colSpan={2}>Player</th>
+                <th colSpan={2}>Company</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Full</td>
+                <td>Half</td>
+                <td>Full</td>
+                <td>Half</td>
+              </tr>
+              <tr>
+                <td>${player.treasury + playerPayoutFull}</td>
+                <td>${player.treasury + playerPayoutHalf}</td>
+                <td>${company.treasury + companyPayoutFull}</td>
+                <td>${company.treasury + treasuryHalf + companyPayoutHalf}</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      }
+
 
       <section className="my-3">
         <header>
@@ -123,22 +176,8 @@ export default function Calculator({ setNumpad, numpad, moveEps, eps, setEps }) 
             eps: shareholderHalf / 10
           })}
         </div>
-        <div className="d-flex my-2">
-          Treasury Shares: 
-          <button onClick={() => moveTreasuryShares(-1)} className="btn btn-sm btn-secondary mx-1">&lt;</button>
-          <input
-            type="number"
-            min="0"
-            max="18"
-            style={{ width: "15%" }}
-            onChange={(e) => setTreasuryShares(e.target.value)}
-            value={treasuryShares}
-            onFocus={e => e.target.blur()}
-          />
-          <button onClick={() => moveTreasuryShares(1)} className="btn btn-sm btn-secondary mx-1">&gt;</button>
-        </div>
         <p>
-          Treasury gets: ${treasuryHalf + (shareholderHalf / shareType) * treasuryShares}
+          Treasury half: ${treasuryHalf}
         </p>
 
       </section>

@@ -1,0 +1,11 @@
+.Calculator .holding {
+  width: 50%;
+}
+
+.Calculator .holding p {
+  margin: 0;
+}
+
+/* .Calculator .projected-holdings div:first-child {
+  border: 1px solid black;
+} */

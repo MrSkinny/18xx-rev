@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import "./App.css";
 import { useState, useCallback } from "react";
 import Calculator from "./Calculator";
@@ -21,7 +22,7 @@ export default function App() {
     treasury: 0,
     shares: 0,
   });
-
+  const [showProjections, setShowProjections] = useState(false);
 
   const moveEps = useCallback((n) => {
     if (eps + n < 0) return;
@@ -63,34 +64,43 @@ export default function App() {
     }
   };
 
+  const setPlayerTreasury = useCallback((n) => setPlayer(p => ({ ...p, treasury: n })), []);
+  const setCompanyTreasury = useCallback((n) => setCompany(c => ({ ...c, treasury: n })), []);
+
   let numProps = {};
   switch (numpad.type) {
     case "eps":
-      numProps = { x: eps, setX: setEps, typeX: typeInput("eps"), zeroOnOpen: true }; break;
+      numProps = { x: eps, setX: setEps, typeX: typeInput("eps") }; break;
     case "player":
       numProps = {
         x: player.treasury,
-        setX: (n) => setPlayer({ ...player, treasury: n }),
+        setX: setPlayerTreasury,
         typeX: typeInput("player"),
-        zeroOnOpen: false
       }; break;
     case "company":
       numProps = {
         x: company.treasury,
-        setX: (n) => setCompany({ ...company, treasury: n }),
+        setX: setCompanyTreasury,
         typeX: typeInput("company"),
-        zeroOnOpen: false
       }; break;
     default:
       numProps = {};
   }
 
+  const toggleBaseClasses = { btn: true, "btn-sm": true, "mx-1": true };
+  const playerBtnClass = classNames({ ...toggleBaseClasses, "btn-danger": !player.show, "btn-success": player.show });
+  const companyBtnClass = classNames({ ...toggleBaseClasses, "btn-danger": !company.show, "btn-success": company.show });
+  const projectionBtnClass = classNames({ ...toggleBaseClasses, "btn-danger": !showProjections, "btn-success": showProjections });
 
   return (
-    <main>
+    <main className="App">
 
-      <button onClick={() => setPlayer(p => ({ ...p, show: !p.show }))}>Player</button>
-      <button onClick={() => setCompany(c => ({ ...c, show: !c.show }))}>Company</button>
+      <div className="d-flex justify-content-center align-items-center my-2">
+        <span><small>Toggle:</small></span>
+        <button className={playerBtnClass} onClick={() => setPlayer(p => ({ ...p, show: !p.show }))}>Player</button>
+        <button className={companyBtnClass} onClick={() => setCompany(c => ({ ...c, show: !c.show }))}>Company</button>
+        <button className={projectionBtnClass} onClick={() => setShowProjections(p => !p)}>Projections</button>
+      </div>
 
       <section className="d-flex justify-space-between">
         {player.show &&
@@ -103,7 +113,15 @@ export default function App() {
           />
         }
 
-        {company.show && <Entity name="company" entity={company} setShares={(dir) => setCompany(c => ({ ...c, shares: c.shares + dir }))} numpad={numpad} setNumpad={setNumpad} />}
+        {company.show && 
+          <Entity 
+            name="company" 
+            entity={company} 
+            setShares={(dir) => setCompany(c => ({ ...c, shares: c.shares + dir }))} 
+            numpad={numpad} 
+            setNumpad={setNumpad} 
+          />
+        }
       </section>
 
       <Calculator
@@ -114,6 +132,10 @@ export default function App() {
         numpad={numpad}
         payouts={payouts}
         setPayouts={setPayouts}
+        company={company}
+        setCompany={setCompany}
+        player={player}
+        showProjections={showProjections}
       />
 
       {numpad.show &&
