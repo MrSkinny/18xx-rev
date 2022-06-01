@@ -122,7 +122,7 @@ export default function Calculator({
         <button onClick={() => moveEps(-10)} className="btn btn-sm btn-secondary mx-1">&lt;&lt;</button>
         <button onClick={() => moveEps(-1)} className="btn btn-sm btn-secondary mx-1">&lt;</button>
         <input
-          type="number"
+          type="text"
           min="0"
           value={eps}
           onChange={(e) => setEps(e.target.value)}
