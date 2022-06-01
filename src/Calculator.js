@@ -18,6 +18,7 @@ export default function Calculator({
 
   useEffect(() => {
     function handleKeyDown(e) {
+      console.log(e.keyCode);
       switch (e.keyCode) {
         case 39:
           return e.shiftKey ? moveEps(10) : moveEps(1);
@@ -30,6 +31,7 @@ export default function Calculator({
 
         case 32:
         case 190:
+        case 110:
           return toggleShareType();
 
         default:
