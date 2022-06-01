@@ -9,3 +9,20 @@
 /* .Calculator .projected-holdings div:first-child {
   border: 1px solid black;
 } */
+
+.earnings-input {
+  width: 40px;
+}
+
+.btn-share-type-5 {
+  background-color: paleturquoise;
+}
+
+.btn-share-type-10 {
+  background-color: blue;
+  color: white;
+}
+
+.btn-share-type-10:hover {
+  color: white;
+}

@@ -1,4 +1,5 @@
 import "./Calculator.css";
+import classNames from "classnames";
 import { useState, useEffect } from "react";
 import Revenue from "./Revenue";
 
@@ -17,7 +18,6 @@ export default function Calculator({
 
   useEffect(() => {
     function handleKeyDown(e) {
-      console.log(e.keyCode)
       switch (e.keyCode) {
         case 39:
           return e.shiftKey ? moveEps(10) : moveEps(1);
@@ -103,12 +103,20 @@ export default function Calculator({
     return outputs;
   }
 
+  const btnShareTypeClass = classNames({
+    btn: true, "btn-sm": true, "my-2": true,
+    "btn-share-type-5": shareType === 5,
+    "btn-share-type-10": shareType === 10,
+  });
+
   return (
     <div className="Calculator container">
       <div className="d-flex justify-content-center">
-        <button className="btn btn-sm btn-info my-2" onClick={toggleShareType}>{shareType}-share</button>
+        <button className={btnShareTypeClass} onClick={toggleShareType}>{shareType}-share</button>
       </div>
-      <div className="d-flex justify-content-center">
+      <div className="d-flex justify-content-center align-items-center">
+        <small>Earnings:</small>
+
         <button onClick={() => moveEps(-10)} className="btn btn-sm btn-secondary mx-1">&lt;&lt;</button>
         <button onClick={() => moveEps(-1)} className="btn btn-sm btn-secondary mx-1">&lt;</button>
         <input
@@ -116,7 +124,7 @@ export default function Calculator({
           min="0"
           value={eps}
           onChange={(e) => setEps(e.target.value)}
-          style={{ width: "15%" }}
+          className="earnings-input"
           onFocus={e => e.target.blur()}
         />
         <button onClick={() => moveEps(1)} className="btn btn-sm btn-secondary mx-1">&gt;</button>
