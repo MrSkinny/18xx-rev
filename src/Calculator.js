@@ -70,7 +70,7 @@ export default function Calculator({
     playerPayoutFull = eps * player.shares;
     playerPayoutHalf = (shareholderHalf / 10) * player.shares;
     companyPayoutFull = eps * company.shares;
-    companyPayoutHalf = (treasuryHalf / 10) * company.shares;
+    companyPayoutHalf = (shareholderHalf / 10) * company.shares;
   } else {
     playerPayoutFull = ((eps * 10) / 5) * player.shares;
     playerPayoutHalf = (shareholderHalf / 5) * player.shares;
