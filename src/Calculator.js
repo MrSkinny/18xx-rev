@@ -93,14 +93,14 @@ export default function Calculator({
       i++;
     }
 
-    while (i < 10) {
-      outputs.push(
-        <div key={i} style={{ width: "19%", backgroundColor: "lightgray" }}>
-          N/A
-        </div>
-      );
-      i++;
-    }
+    // while (i < 10) {
+    //   outputs.push(
+    //     <div key={i} style={{ width: "19%", backgroundColor: "lightgray" }}>
+    //       N/A
+    //     </div>
+    //   );
+    //   i++;
+    // }
 
     return outputs;
   }
