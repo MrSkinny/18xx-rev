@@ -189,7 +189,7 @@ export default function Calculator({
           })}
         </div>
         <h5 className="my-3">
-          {company.shares > 0 && <><span>Total to Company: ${treasuryHalf + companyPayoutHalf}</span><br /></>}
+          {company.shares > 0 && <><span>Total to Company with {company.shares} shares: ${treasuryHalf + companyPayoutHalf}</span><br /></>}
           Treasury half only: ${treasuryHalf}
         </h5>
 
